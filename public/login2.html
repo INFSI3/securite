@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <!-- <a href="/email">Email Client</a> -->
+    </nav>
+
+    <form id="login-form" class="login-form">
+      <h1>Verification Page</h1>
+      <!-- Error Message Container -->
+      <p id="error-message" class="error"></p>
+      <input name="code" id="code" type="text" placeholder="Code" required />
+      <br />
+
+      <button type="button" onclick="handleLogin2(event)">Submit</button>
+    </form>
+    <script defer src="script.js"></script>
+  </body>
+</html>
