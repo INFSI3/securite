@@ -73,13 +73,46 @@ async function handleRegistration(event) {
     }
   }
   
+  // async function handleLogin2(event) {
+  //   event.preventDefault(); // Prevent any default form behavior
+  
+  //   const code = document.getElementById("code").value;
+  //   const errorMessageElement = document.getElementById("error-message");
+  
+  //   errorMessageElement.innerText = ""; // Clear previous error messages
+  
+  //   try {
+  //     const response = await fetch("/verify-2fa", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ code }),
+  //     });
+  
+  //     const data = await response.json();
+  
+  //     if (!response.ok) {
+  //       errorMessageElement.innerText = data.message; // Display error message
+  //       console.log(data.message);
+  //     } else {
+  //       localStorage.setItem("loggedIn", "true"); // Store login status
+  //       if (data.redirect) {
+  //         window.location.href = data.redirect;
+  //       }
+  //       // window.location.href = "/account"; // Redirect to Account Page
+  //     }
+  //   } catch (error) {
+  //     errorMessageElement.innerText = "An error occurred. Please try again.";
+  //   }
+  // }
+  
+
   async function handleLogin2(event) {
-    event.preventDefault(); // Prevent any default form behavior
+    event.preventDefault(); // لمنع تحديث الصفحة
   
     const code = document.getElementById("code").value;
     const errorMessageElement = document.getElementById("error-message");
   
-    errorMessageElement.innerText = ""; // Clear previous error messages
+    errorMessageElement.innerText = ""; // إزالة الرسالة السابقة
   
     try {
       const response = await fetch("/verify-2fa", {
@@ -91,17 +124,21 @@ async function handleRegistration(event) {
       const data = await response.json();
   
       if (!response.ok) {
-        errorMessageElement.innerText = data.message; // Display error message
+        errorMessageElement.innerText = data.message;
         console.log(data.message);
       } else {
-        localStorage.setItem("loggedIn", "true"); // Store login status
+        // ✅ خزّن اسم المستخدم في localStorage
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", data.username); // مهم لعرض الاسم
+  
+        // ✅ الانتقال إلى الصفحة التالية
         if (data.redirect) {
           window.location.href = data.redirect;
         }
-        // window.location.href = "/account"; // Redirect to Account Page
       }
     } catch (error) {
       errorMessageElement.innerText = "An error occurred. Please try again.";
     }
   }
+  
   

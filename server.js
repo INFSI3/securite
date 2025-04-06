@@ -221,148 +221,182 @@
 
 
 
+//2
+// const express = require("express");
+// const path = require("path");
+// const session = require("express-session");
+// const cookieParser = require("cookie-parser");
+// const crypto = require("crypto");
+// const dotenv = require("dotenv");
+// const rateLimit = require("express-rate-limit");
+// const nodemailer = require("nodemailer"); // ⬅️ جديد
+// const fs = require("fs"); // مكتبة لقراءة وكتابة الملفات
+// const { get } = require("http");
 
-const express = require("express");
-const path = require("path");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const crypto = require("crypto");
-const dotenv = require("dotenv");
-const rateLimit = require("express-rate-limit");
-const nodemailer = require("nodemailer"); // ⬅️ جديد
-const fs = require("fs"); // مكتبة لقراءة وكتابة الملفات
-const { get } = require("http");
+// dotenv.config();
 
-dotenv.config();
+// const app = express();
+// const PORT = 3000;
 
-const app = express();
-const PORT = 3000;
+// // Middlewares
+// app.use(express.json());
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" folder
+// app.use(
+//   session({
+//     secret: "mySuperSecret",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false },
+//   })
+// );
 
-// Middlewares
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" folder
-app.use(
-  session({
-    secret: "mySuperSecret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
+// // Rate limiter
+// const limiter = rateLimit({
+//   windowMs: 1 * 60 * 1000, // 1 minute
+//   max: 10,
+// });
+// app.use(limiter);
 
-// Rate limiter
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 10,
-});
-app.use(limiter);
+// // Read existing users from users.json file
+// const getUsers = () => {
+//   try {
+//     const data = fs.readFileSync("users.json", "utf8");
+//     return JSON.parse(data);
+//   } catch (error) {
+//     return []; // Return an empty array if file doesn't exist or is empty
+//   }
+// };
 
-// Read existing users from users.json file
-const getUsers = () => {
-  try {
-    const data = fs.readFileSync("users.json", "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    return []; // Return an empty array if file doesn't exist or is empty
-  }
-};
+// const saveUsers = (users) => {
+//   fs.writeFileSync("users.json", JSON.stringify(users, null, 2)); // Save users to users.json
+// };
 
-const saveUsers = (users) => {
-  fs.writeFileSync("users.json", JSON.stringify(users, null, 2)); // Save users to users.json
-};
+// // إعداد nodemailer
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER, // استخدام البريد الإلكتروني من .env
+//     pass: process.env.EMAIL_PASS, // استخدام كلمة المرور من .env
+//   },
 
-// إعداد nodemailer
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER, // استخدام البريد الإلكتروني من .env
-    pass: process.env.EMAIL_PASS, // استخدام كلمة المرور من .env
-  },
-});
+//   // port:  465, 
+//   // secure: false, 
+// });
 
-// Routes
+// // Routes
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
 
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "register.html"));
-});
+// app.get("/register", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "register.html"));
+// });
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+// app.get("/login", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "login.html"));
+// });
 
-app.get("/account", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+// app.get("/account", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "login.html"));
+// });
 
-// Register route
-app.post("/register", (req, res) => {
-  const { username, email, password } = req.body;
+// // Register route
+// app.post("/register", (req, res) => {
+//   const { username, email, password } = req.body;
 
-  const users = getUsers();
-  const userExists = users.find((u) => u.username === username);
-  if (userExists) {
-    return res.status(400).json({ message: "Username already exists" });
-  }
+//   const users = getUsers();
+//   const userExists = users.find((u) => u.username === username);
+//   if (userExists) {
+//     return res.status(400).json({ message: "Username already exists" });
+//   }
 
-  users.push({ username, email, password });
-  saveUsers(users); // Save new user to users.json
+//   users.push({ username, email, password });
+//   saveUsers(users); // Save new user to users.json
 
-  req.session.user = username;
+//   req.session.user = username;
 
-  res.json({ redirect: "login.html" });
-});
+//   res.json({ redirect: "login.html" });
+// });
 
-// Login route
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const users = getUsers();
-  const user = users.find((u) => u.username === username && u.password === password);
+// // Login route
+// app.post("/login", (req, res) => {
+//   const { username, password } = req.body;
+//   const users = getUsers();
+//   const user = users.find((u) => u.username === username && u.password === password);
 
-  if (!user) {
-    return res.status(401).json({ message: "Invalid username or password" });
-  }
+//   if (!user) {
+//     return res.status(401).json({ message: "Invalid username or password" });
+//   }
 
-  // Generate 2FA code
-  const code = Math.floor(100000 + Math.random() * 900000).toString();
-  req.session.user = username;
-  req.session.code = code;
-  req.session.email = user.email;
+//   // Generate 2FA code
+//   const code = Math.floor(10 + Math.random() * 90).toString();
+//   req.session.user = username;
+//   req.session.code = code;
+//   req.session.email = user.email;
 
-  // Send code via email
-  transporter.sendMail({
-    from: `"MyApp" <${process.env.EMAIL_USER}>`, // Corrected here: use backticks
-    to: user.email,
-    subject: "Your 2FA Code",
-    text: `Your verification code is: ${code}`, // Corrected here: use backticks
-  });
+//   // Send code via email
+//   transporter.sendMail({
+//     from: `"MyApp" <${process.env.EMAIL_USER}>`, // Corrected here: use backticks
+//     to: user.email,
+//     subject: "Your 2FA Code",
+//     text: `Your verification code is: ${code}`, // Corrected here: use backticks
+//   });
 
-  // Set the username in the cookies
-  res.cookie("verify", username, { maxAge: 900000, httpOnly: true });
+//   // Set the username in the cookies
+//   res.cookie("verify", username, { maxAge: 900000, httpOnly: true });
 
-  res.json({ redirect: "login2.html" });
-});
+//   res.json({ redirect: "login2.html" });
+// });
 
-// 2FA verification
-app.post("/verify-2fa", (req, res) => {
-  const { code } = req.body;
+// app.post("/logout", (req, res) => {
+//   req.session.destroy();
+//   res.clearCookie("verify");
+//   res.json({ message: "Logged out" });
+// });
 
-  if (code === req.session.code) {
-    // After successful 2FA, redirect to the account page
-    return res.json({ redirect: "login.html" });
-  }
+// // 2FA verification
+// // app.post("/verify-2fa", (req, res) => {
+// //   const { code } = req.body;
 
-  res.status(400).json({ message: "Invalid 2FA code" });
-});
+// //   if (code === req.session.code) {
+// //     // After successful 2FA, redirect to the account page
+// //     return res.json({ redirect: "login.html" });
+// //   }
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// //   res.status(400).json({ message: "Invalid 2FA code" });
+// // });
+
+// // 2FA verification
+// app.post("/verify-2fa", (req, res) => {
+//   const { code } = req.body;
+
+//   if (code === req.session.code) {
+//     const username = req.session.user;
+//     return res.json({
+//       redirect: "account.html",  // الانتقال إلى صفحة الحساب
+//       username: username         // إرجاع اسم المستخدم
+//     });
+//   }
+
+//   res.status(400).json({ message: "Invalid 2FA code" });
+// });
+
+// app.get("/account", (req, res) => {
+//   if (req.session.user) {
+//     // إذا كان المستخدم مسجلًا في الجلسة، أرسل استجابة JSON تحتوي على اسم المستخدم
+//     return res.json({ username: req.session.user });
+//   } else {
+//     // إذا لم يكن المستخدم مسجلًا، أرسل استجابة 401 (غير مصرح)
+//     return res.status(401).json({ message: "Not logged in" });
+//   }
+// });
+
+// // Start the server
+// app.listen(PORT, () => {
+//   console.log(`Server running at http://localhost:${PORT}`);
+// });
 
 
 
@@ -699,3 +733,178 @@ app.listen(PORT, () => {
 // app.listen(PORT, () => {
 //   console.log(`Server running at http://localhost:${PORT}`);
 // });
+
+
+
+
+
+
+const express = require("express");
+const path = require("path");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const fs = require("fs");
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+const rateLimit = require("express-rate-limit");
+
+dotenv.config();
+
+const app = express();
+const PORT = 3000;
+
+// Middlewares
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the "public" folder
+app.use(
+  session({
+    secret: "mySuperSecret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
+
+// Rate limiter
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 10,
+});
+app.use(limiter);
+
+// Read existing users from users.json file
+const getUsers = () => {
+  try {
+    const data = fs.readFileSync("users.json", "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    return []; // Return an empty array if file doesn't exist or is empty
+  }
+};
+
+const saveUsers = (users) => {
+  fs.writeFileSync("users.json", JSON.stringify(users, null, 2)); // Save users to users.json
+};
+
+// إعداد nodemailer
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER, // استخدام البريد الإلكتروني من .env
+    pass: process.env.EMAIL_PASS, // استخدام كلمة المرور من .env
+  },
+});
+
+// Routes
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "register.html"));
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+app.get("/account", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+// Register route
+app.post("/register", (req, res) => {
+  const { username, email, password } = req.body;
+
+  const users = getUsers();
+  const userExists = users.find((u) => u.username === username);
+  if (userExists) {
+    return res.status(400).json({ message: "Username already exists" });
+  }
+
+  users.push({ username, email, password });
+  saveUsers(users); // Save new user to users.json
+
+  req.session.user = username;
+
+  res.json({ redirect: "login.html" });
+});
+
+// Login route
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const users = getUsers();
+  const user = users.find((u) => u.username === username && u.password === password);
+
+  if (!user) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+
+  // Generate 2FA code
+  const code = Math.floor(10 + Math.random() * 90).toString();
+  req.session.user = username;
+  req.session.code = code;
+  req.session.email = user.email;
+
+  // Send code via email
+  transporter.sendMail({
+    from: `"MyApp" <${process.env.EMAIL_USER}>`,
+    to: user.email,
+    subject: "Your 2FA Code",
+    text: `Your verification code is: ${code}`,
+  });
+
+  // Set the username in the cookies
+  res.cookie("verify", username, { maxAge: 900000, httpOnly: true });
+
+  res.json({ redirect: "login2.html" });
+});
+
+// 2FA verification
+app.post("/verify-2fa", (req, res) => {
+  const { code } = req.body;
+
+  if (code === req.session.code) {
+    const username = req.session.user;
+    return res.json({
+      redirect: "account.html",
+      username: username,
+    });
+  }
+
+  res.status(400).json({ message: "Invalid 2FA code" });
+});
+
+// صفحة الحساب (إذا كان المستخدم مسجلاً)
+app.get("/account", (req, res) => {
+  if (req.session.user) {
+    // إرسال صفحة HTML تحتوي على المعلومات
+    return res.sendFile(path.join(__dirname, "public", "login.html"));
+  } else {
+    // في حالة عدم وجود جلسة (المستخدم ليس مسجلاً)
+    return res.status(401).json({ message: "Not logged in" });
+  }
+});
+
+// إرسال بيانات JSON عن المستخدم
+app.get("/account-data", (req, res) => {
+  if (req.session.user) {
+    // إعادة استجابة JSON تحتوي على اسم المستخدم
+    return res.json({ username: req.session.user });
+  } else {
+    // في حالة عدم وجود جلسة
+    return res.status(401).json({ message: "Not logged in" });
+  }
+});
+
+// Logout route
+app.post("/logout", (req, res) => {
+  req.session.destroy();
+  res.clearCookie("verify");
+  res.json({ message: "Logged out" });
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

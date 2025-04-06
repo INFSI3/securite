@@ -53,5 +53,20 @@
     "username": "2001",
     "email": "ayoupbentaleb@gmail.com",
     "password": "2001"
+  },
+  {
+    "username": "2002",
+    "email": "ayoupbentaleb@gmail.com",
+    "password": "2000"
+  },
+  {
+    "username": "2000",
+    "email": "ayoupbentaleb@gmail.com",
+    "password": "1212"
+  },
+  {
+    "username": "0001",
+    "email": "ayoupbentaleb@gmail.com",
+    "password": "0000"
   }
 ]
