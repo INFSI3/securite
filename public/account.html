@@ -56,22 +56,22 @@
       <a href="#" onclick="logout()">Logout</a>
     </nav>
 
-    <!-- هنا سنعرض اسم المستخدم -->
+    
     <h1 id="welcome-message">Welcome</h1>
 
     <script>
-      // دالة لتسجيل الخروج
+      
       async function logout() {
         await fetch("/logout", {
           method: "POST",
         });
-        window.location.href = "/"; // إعادة التوجيه إلى صفحة الدخول
+        window.location.href = "/"; 
       }
 
       // عند تحميل الصفحة
       window.onload = async () => {
         try {
-          const response = await fetch("/account-data"); // استخدام /account-data بدلاً من /account
+          const response = await fetch("/account-data"); 
 
           if (response.ok) {
             const data = await response.json();

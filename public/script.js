@@ -107,12 +107,12 @@ async function handleRegistration(event) {
   
 
   async function handleLogin2(event) {
-    event.preventDefault(); // لمنع تحديث الصفحة
+    event.preventDefault(); 
   
     const code = document.getElementById("code").value;
     const errorMessageElement = document.getElementById("error-message");
   
-    errorMessageElement.innerText = ""; // إزالة الرسالة السابقة
+    errorMessageElement.innerText = ""; 
   
     try {
       const response = await fetch("/verify-2fa", {
@@ -127,11 +127,11 @@ async function handleRegistration(event) {
         errorMessageElement.innerText = data.message;
         console.log(data.message);
       } else {
-        // ✅ خزّن اسم المستخدم في localStorage
+        
         localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("username", data.username); // مهم لعرض الاسم
+        localStorage.setItem("username", data.username); 
   
-        // ✅ الانتقال إلى الصفحة التالية
+       
         if (data.redirect) {
           window.location.href = data.redirect;
         }
