@@ -76,7 +76,7 @@
           if (response.ok) {
             const data = await response.json();
             if (data.username) {
-              document.getElementById('welcome-message').innerText = `Welcome, ${data.username}!`;
+              document.getElementById('welcome-message').innerText = `Welcome ${data.username}`;
             }
           } else {
             const errorData = await response.json();
