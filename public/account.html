@@ -1,45 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-
-  <body>
-    <nav>
-      <a href="/">Home</a>
-      <a href="#" onclick="logout()">Logout</a>
-    </nav>
-
-    <h1>Welcome </h1>
-    
-    <script>
-      async function logout() {
-        await fetch("/logout", {
-          method: "POST",
-        });
-        window.location.href = "/"; // Redirect to login page
-      }
-
-      window.onload = async () => {
-        const response = await fetch("/account");  // افترض أن الخادم سيرسل الصفحة المناسبة
-        const data = await response.json();
-
-        if (data.username) {
-          // تحديث النص ليعرض "Welcome" مع اسم المستخدم
-          document.getElementById('welcome-message').innerText = `Welcome, ${data.username}!`;
-        }
-      };
-      
-  
-    </script>
-  </body>
-</html> -->
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +26,7 @@
         window.location.href = "/"; 
       }
 
-      // عند تحميل الصفحة
+      
       window.onload = async () => {
         try {
           const response = await fetch("/account-data"); 
